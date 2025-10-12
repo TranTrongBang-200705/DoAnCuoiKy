@@ -11,12 +11,12 @@ using DoAnCuoiKy.Models;
 
 namespace DoAnCuoiKy
 {
-    public partial class frmMain : Form
+    public partial class frmMainHocVien : Form
     
     {
         private readonly Model1 _context;
         private readonly NguoiDung _nguoiDunghientai;
-        public frmMain(NguoiDung nguoiDung, Model1 context)
+        public frmMainHocVien(NguoiDung nguoiDung, Model1 context)
         {
             InitializeComponent();
             _nguoiDunghientai = nguoiDung;
@@ -65,7 +65,7 @@ namespace DoAnCuoiKy
 
         private void trangChủToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var frmDashboard = new frmDashboard(_nguoiDunghientai, _context);
+            var frmDashboard = new frmDashboardHocVien(_nguoiDunghientai, _context);
             frmDashboard.MdiParent = this;
             frmDashboard.WindowState = FormWindowState.Normal;
             frmDashboard.Show();
@@ -96,6 +96,19 @@ namespace DoAnCuoiKy
             frmDoiMK.MdiParent = this;
             frmDoiMK.WindowState = FormWindowState.Normal;
             frmDoiMK.Show();
+        }
+
+        private void doToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tấtCảKhóaHọcToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            var frmDanhSachKH = new frmDanhSachKhoaHoc(_nguoiDunghientai, _context);
+            frmDanhSachKH.MdiParent = this;
+            frmDanhSachKH.WindowState = FormWindowState.Maximized;
+            frmDanhSachKH.Show();
         }
     }
 }

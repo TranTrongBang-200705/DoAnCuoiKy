@@ -37,57 +37,98 @@ namespace DoAnCuoiKy
             {
                 string tenDangNhap = txtTaiKhoan.Text.Trim();
                 string matKhau = txtMatKhau.Text;
+                int vaiTroChon = cboVaiTro.SelectedIndex;
 
                 // Validate
-                if (string.IsNullOrEmpty(tenDangNhap))
+                if (string.IsNullOrEmpty(tenDangNhap) || string.IsNullOrEmpty(matKhau))
                 {
-                    MessageBox.Show("Vui lòng nhập tài khoản!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtTaiKhoan.Focus();
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Thông báo");
                     return;
                 }
 
-                if (string.IsNullOrEmpty(matKhau))
+                if (vaiTroChon < 0)
                 {
-                    MessageBox.Show("Vui lòng nhập mật khẩu!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtMatKhau.Focus();
+                    MessageBox.Show("Vui lòng chọn vai trò!", "Thông báo");
                     return;
                 }
 
                 // Tìm người dùng trong database
-                var nguoiDung = await _context.NguoiDungs.FirstOrDefaultAsync(u => u.TenDangNhap == tenDangNhap);
+                var nguoiDung = await _context.NguoiDungs
+                    .FirstOrDefaultAsync(u => u.TenDangNhap == tenDangNhap);
 
                 if (nguoiDung == null)
                 {
-                    MessageBox.Show("Tài khoản không tồn tại!", "Lỗi đăng nhập",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Tài khoản không tồn tại!", "Lỗi đăng nhập");
                     txtTaiKhoan.Focus();
                     return;
                 }
 
-                // Kiểm tra mật khẩu (giả lập - thực tế cần hash)
-                if (matKhau == "123456") // Thay bằng: KiemTraMatKhau(matKhau, nguoiDung.MatKhauHash)
+                // KIỂM TRA VAI TRÒ
+                if (nguoiDung.VaiTro != vaiTroChon)
                 {
-                    // Đăng nhập thành công
+                    string vaiTroThuc = LayTenVaiTro(nguoiDung.VaiTro);
+                    string vaiTroChonText = LayTenVaiTro(vaiTroChon);
+
+                    MessageBox.Show(
+                        $"Tài khoản này là {vaiTroThuc}, không phải {vaiTroChonText}!\nVui lòng chọn đúng vai trò.",
+                        "Sai vai trò", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Kiểm tra mật khẩu
+                if (matKhau == "123456")
+                {
+                    // ĐĂNG NHẬP THÀNH CÔNG - CHUYỂN HƯỚNG THEO VAI TRÒ
                     this.Hide();
-                    var frmMain = new frmMain(nguoiDung, _context);
-                    frmMain.Show();
+
+                    switch (nguoiDung.VaiTro)
+                    {
+                        case 0: // HỌC VIÊN
+                            var frmHocVien = new frmMainHocVien(nguoiDung, _context);
+                            frmHocVien.Show();
+                            break;
+
+                        case 1: // GIẢNG VIÊN
+                            var frmGiangVien = new frmMainGiangVien(nguoiDung, _context);
+                            frmGiangVien.Show();
+                            break;
+
+                        case 2: // QUẢN TRỊ
+                            var frmQuanTri = new frmMainQuanTri(nguoiDung, _context);
+                            frmQuanTri.Show();
+                            break;
+
+                        default:
+                            var frmDefault = new frmMainHocVien(nguoiDung, _context);
+                            frmDefault.Show();
+                            break;
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Mật khẩu không đúng!", "Lỗi đăng nhập",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Mật khẩu không đúng!", "Lỗi đăng nhập");
                     txtMatKhau.Focus();
                     txtMatKhau.SelectAll();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi hệ thống: {ex.Message}", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi hệ thống: {ex.Message}", "Lỗi");
             }
         }
+        private string LayTenVaiTro(int vaiTro)
+        {
+            return vaiTro switch
+            {
+                0 => "Học viên",
+                1 => "Giảng viên",
+                2 => "Quản trị viên",
+                _ => "Không xác định"
+            };
+        }
+
+
+
 
         private void chkMK_CheckedChanged(object sender, EventArgs e)
         {

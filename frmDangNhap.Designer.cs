@@ -36,6 +36,8 @@
             this.chkMK = new System.Windows.Forms.CheckBox();
             this.btnDN = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cboVaiTro = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,16 +79,16 @@
             // 
             // txtTaiKhoan
             // 
-            this.txtTaiKhoan.Location = new System.Drawing.Point(196, 63);
-            this.txtTaiKhoan.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTaiKhoan.Location = new System.Drawing.Point(211, 63);
+            this.txtTaiKhoan.Margin = new System.Windows.Forms.Padding(4);
             this.txtTaiKhoan.Name = "txtTaiKhoan";
             this.txtTaiKhoan.Size = new System.Drawing.Size(269, 30);
             this.txtTaiKhoan.TabIndex = 3;
             // 
             // txtMatKhau
             // 
-            this.txtMatKhau.Location = new System.Drawing.Point(196, 139);
-            this.txtMatKhau.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtMatKhau.Location = new System.Drawing.Point(211, 139);
+            this.txtMatKhau.Margin = new System.Windows.Forms.Padding(4);
             this.txtMatKhau.Name = "txtMatKhau";
             this.txtMatKhau.Size = new System.Drawing.Size(269, 30);
             this.txtMatKhau.TabIndex = 4;
@@ -96,8 +98,8 @@
             this.chkMK.AutoSize = true;
             this.chkMK.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkMK.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.chkMK.Location = new System.Drawing.Point(196, 203);
-            this.chkMK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkMK.Location = new System.Drawing.Point(196, 268);
+            this.chkMK.Margin = new System.Windows.Forms.Padding(4);
             this.chkMK.Name = "chkMK";
             this.chkMK.Size = new System.Drawing.Size(156, 24);
             this.chkMK.TabIndex = 5;
@@ -108,8 +110,8 @@
             // btnDN
             // 
             this.btnDN.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnDN.Location = new System.Drawing.Point(217, 275);
-            this.btnDN.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDN.Location = new System.Drawing.Point(217, 317);
+            this.btnDN.Margin = new System.Windows.Forms.Padding(4);
             this.btnDN.Name = "btnDN";
             this.btnDN.Size = new System.Drawing.Size(135, 52);
             this.btnDN.TabIndex = 6;
@@ -119,6 +121,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.cboVaiTro);
             this.groupBox1.Controls.Add(this.txtMatKhau);
             this.groupBox1.Controls.Add(this.btnDN);
             this.groupBox1.Controls.Add(this.label2);
@@ -133,6 +137,30 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin đăng nhập";
             // 
+            // cboVaiTro
+            // 
+            this.cboVaiTro.FormattingEnabled = true;
+            this.cboVaiTro.Items.AddRange(new object[] {
+            "Học viên",
+            "Giảng viên",
+            "Quản trị"});
+            this.cboVaiTro.Location = new System.Drawing.Point(211, 203);
+            this.cboVaiTro.Name = "cboVaiTro";
+            this.cboVaiTro.Size = new System.Drawing.Size(121, 31);
+            this.cboVaiTro.TabIndex = 7;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI Emoji", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Blue;
+            this.label4.Location = new System.Drawing.Point(77, 212);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(127, 22);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Chọn Vai Trò:";
+            // 
             // frmDangNhap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
@@ -141,7 +169,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmDangNhap";
             this.Text = "frmDangNhap";
             this.Load += new System.EventHandler(this.frmDangNhap_Load);
@@ -162,5 +190,7 @@
         private System.Windows.Forms.CheckBox chkMK;
         private System.Windows.Forms.Button btnDN;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cboVaiTro;
     }
 }
