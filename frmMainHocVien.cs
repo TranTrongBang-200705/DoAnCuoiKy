@@ -110,5 +110,15 @@ namespace DoAnCuoiKy
             frmDanhSachKH.WindowState = FormWindowState.Maximized;
             frmDanhSachKH.Show();
         }
+
+        private void khóaHọcCủaTôiToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            
+
+            var frmKhoaHocCuaToi = new frmKhoaHocCuaToi(_nguoiDunghientai, _context);
+            frmKhoaHocCuaToi.MdiParent = this;
+            frmKhoaHocCuaToi.WindowState = FormWindowState.Maximized;
+            frmKhoaHocCuaToi.Show();
+        }
     }
 }

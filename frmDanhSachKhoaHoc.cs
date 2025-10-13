@@ -16,6 +16,9 @@ namespace DoAnCuoiKy
     {
         private readonly Model1 _context;
         private readonly NguoiDung _nguoiDungHienTai;
+        private List<KhoaHoc> _danhSachKhoaHoc;
+        private int _trangHienTai = 1;
+        private const int _soKhoaHocMoiTrang = 3;
 
         public frmDanhSachKhoaHoc(NguoiDung nguoiDung, Model1 context)
         {
@@ -62,8 +65,9 @@ namespace DoAnCuoiKy
             }
         }
 
-        private async void TaiTrinhDoFilter()
+        private  void TaiTrinhDoFilter()
         {
+            cmbTrinhDo.Items.Clear();
             cmbTrinhDo.Items.Add("Tất cả trình độ");
             cmbTrinhDo.Items.Add("Cơ bản");
             cmbTrinhDo.Items.Add("Trung cấp");
@@ -107,7 +111,10 @@ namespace DoAnCuoiKy
 
                 var khoaHocs = await query
                     .OrderByDescending(k => k.NgayTao)
+
                     .ToListAsync();
+                _danhSachKhoaHoc = khoaHocs;
+                _trangHienTai = 1;
 
                 HienThiDuLieuLenPanel(khoaHocs);
             }
@@ -123,6 +130,15 @@ namespace DoAnCuoiKy
             panelKhoaHoc1.Visible = false;
             panelKhoaHoc2.Visible = false;
             panelKhoaHoc3.Visible = false;
+            if (khoaHocs == null || !khoaHocs.Any())
+            {
+                
+                lblThongBao.Text = "Không tìm thấy khóa học nào";
+                CapNhatPhanTrang(0);
+                return;
+            }
+
+            
 
             // Hiển thị dữ liệu lên từng panel có sẵn
             for (int i = 0; i < Math.Min(khoaHocs.Count, 3); i++)
@@ -144,6 +160,23 @@ namespace DoAnCuoiKy
             }
 
             lblThongBao.Text = $"Tìm thấy {khoaHocs.Count} khóa học";
+            CapNhatPhanTrang(khoaHocs.Count);
+        }
+        private void CapNhatPhanTrang(int tongSoKhoaHoc)
+        {
+            if (tongSoKhoaHoc == 0)
+            {
+                lblTrangHienTai.Text = "Trang 0/0";
+                btnTruoc.Enabled = false;
+                btnSau.Enabled = false;
+                return;
+            }
+
+            int tongTrang = (int)Math.Ceiling(tongSoKhoaHoc / (double)_soKhoaHocMoiTrang);
+            lblTrangHienTai.Text = $"Trang {_trangHienTai}/{tongTrang}";
+
+            btnTruoc.Enabled = _trangHienTai > 1;
+            btnSau.Enabled = _trangHienTai < tongTrang;
         }
 
         private void HienThiKhoaHocLenPanel(Panel panel, KhoaHoc khoaHoc)
@@ -328,6 +361,25 @@ namespace DoAnCuoiKy
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi đăng ký: {ex.Message}", "Lỗi");
+            }
+        }
+
+        private void btnTruoc_Click(object sender, EventArgs e)
+        {
+            if (_trangHienTai > 1)
+            {
+                _trangHienTai--;
+                HienThiDuLieuLenPanel(_danhSachKhoaHoc);
+            }
+        }
+
+        private void btnSau_Click(object sender, EventArgs e)
+        {
+            int tongTrang = (int)Math.Ceiling(_danhSachKhoaHoc.Count / (double)_soKhoaHocMoiTrang);
+            if (_trangHienTai < tongTrang)
+            {
+                _trangHienTai++;
+                HienThiDuLieuLenPanel(_danhSachKhoaHoc);
             }
         }
     }
