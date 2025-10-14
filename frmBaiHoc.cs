@@ -19,6 +19,11 @@ namespace DoAnCuoiKy
         private BaiHoc _baiHocHienTai;
         private int _baiHocIndex = 0;
 
+        // Dictionary để lưu tiến độ cho từng bài học
+        private Dictionary<Guid, (double progress, int seconds)> _tienDoTheoBaiHoc;
+        private Timer _progressTimer;
+        private bool _isVideoPlaying = false;
+
         public frmBaiHoc(string maKhoaHoc, string maHocVien, Model1 context)
         {
             InitializeComponent();
@@ -26,17 +31,23 @@ namespace DoAnCuoiKy
             _maKhoaHoc = maKhoaHoc;
             _maHocVien = maHocVien;
             _context = context;
+            _tienDoTheoBaiHoc = new Dictionary<Guid, (double, int)>();
 
+            SetupProgressTracking();
             Load += async (s, e) => await TaiDuLieuKhoaHoc();
+        }
+
+        private void SetupProgressTracking()
+        {
+            _progressTimer = new Timer();
+            _progressTimer.Interval = 2000; // ⚡ GIẢM: 2 giây cập nhật 1 lần (thay vì 5 giây)
+            _progressTimer.Tick += async (s, e) => await CapNhatTienDoVideo();
         }
 
         private async Task TaiDuLieuKhoaHoc()
         {
             try
             {
-                // KHỞI TẠO WEBVIEW2 TRƯỚC KHI DÙNG
-                await webView2Video.EnsureCoreWebView2Async(null);
-
                 // 1. Load thông tin khóa học
                 var khoaHoc = await _context.KhoaHocs
                     .FirstOrDefaultAsync(kh => kh.MaKhoaHoc.ToString() == _maKhoaHoc);
@@ -56,12 +67,8 @@ namespace DoAnCuoiKy
                     .OrderBy(bh => bh.ThuTu)
                     .ToListAsync();
 
-                // 4. Load tiến độ học tập
-                var maBaiHocs = _danhSachBaiHoc.Select(bh => bh.MaBaiHoc).ToList();
-                _tienDoHocVien = await _context.TienDoHocTaps
-                    .Where(td => td.MaHocVien.ToString() == _maHocVien &&
-                                 maBaiHocs.Contains(td.MaBaiHoc))
-                    .ToListAsync();
+                // 4. 🔥 THAY ĐỔI: Gọi phương thức async mới
+                await KhoiTaoTienDoTuCSDL();
 
                 // 5. Hiển thị danh sách bài học
                 HienThiDanhSachBaiHoc();
@@ -70,15 +77,64 @@ namespace DoAnCuoiKy
                 if (_danhSachBaiHoc.Any())
                 {
                     _baiHocHienTai = _danhSachBaiHoc.First();
+                    _baiHocIndex = 0;
                     HienThiBaiHoc(_baiHocHienTai);
                 }
 
                 // 7. Cập nhật thống kê
-                CapNhatThongKe();
+                await CapNhatThongKe();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi tải dữ liệu: {ex.Message}");
+            }
+        }
+
+        // KHỞI TẠO TIẾN ĐỘ TỪ CSDL CHO TẤT CẢ BÀI HỌC
+        // KHỞI TẠO TIẾN ĐỘ TỪ CSDL CHO TẤT CẢ BÀI HỌC
+        private async Task KhoiTaoTienDoTuCSDL()
+        {
+            try
+            {
+                _tienDoTheoBaiHoc.Clear();
+
+                // 🔥 QUAN TRỌNG: Dùng context MỚI để load dữ liệu mới nhất
+                using (var freshContext = new Model1())
+                {
+                    var maBaiHocs = _danhSachBaiHoc.Select(bh => bh.MaBaiHoc).ToList();
+                    var tienDoMoi = await freshContext.TienDoHocTaps
+                        .Where(td => td.MaHocVien.ToString() == _maHocVien &&
+                                     maBaiHocs.Contains(td.MaBaiHoc))
+                        .ToListAsync();
+
+                    // Cập nhật cả _tienDoHocVien và _tienDoTheoBaiHoc
+                    _tienDoHocVien = tienDoMoi;
+
+                    foreach (var baiHoc in _danhSachBaiHoc)
+                    {
+                        var tienDo = tienDoMoi.FirstOrDefault(td => td.MaBaiHoc == baiHoc.MaBaiHoc);
+
+                        if (tienDo != null)
+                        {
+                            // Lấy tiến độ từ CSDL
+                            _tienDoTheoBaiHoc[baiHoc.MaBaiHoc] = (
+                                (double)tienDo.TiLeHoanThanh,
+                                tienDo.ThoiGianXem ?? 0
+                            );
+                            Console.WriteLine($"🔥 Load từ CSDL - Bài {baiHoc.TieuDeBaiHoc}: {tienDo.TiLeHoanThanh}%");
+                        }
+                        else
+                        {
+                            // Chưa có tiến độ, khởi tạo = 0
+                            _tienDoTheoBaiHoc[baiHoc.MaBaiHoc] = (0, 0);
+                            Console.WriteLine($"📝 Khởi tạo mới - Bài {baiHoc.TieuDeBaiHoc}: 0%");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi khởi tạo tiến độ: {ex.Message}");
             }
         }
 
@@ -97,9 +153,12 @@ namespace DoAnCuoiKy
 
                 foreach (var baiHoc in baiHocTrongChuong)
                 {
-                    var tienDo = _tienDoHocVien.FirstOrDefault(td => td.MaBaiHoc == baiHoc.MaBaiHoc);
+                    var tienDo = _tienDoTheoBaiHoc.ContainsKey(baiHoc.MaBaiHoc)
+                        ? _tienDoTheoBaiHoc[baiHoc.MaBaiHoc].progress
+                        : 0;
+
                     var icon = GetIconForBaiHoc(tienDo);
-                    var nodeBai = new TreeNode($"{icon} Bài {baiHoc.ThuTu}: {baiHoc.TieuDeBaiHoc} ({baiHoc.ThoiLuong} phút)");
+                    var nodeBai = new TreeNode($"{icon} Bài {baiHoc.ThuTu}: {baiHoc.TieuDeBaiHoc} ({tienDo:0}%)");
                     nodeBai.Tag = baiHoc;
                     nodeChuong.Nodes.Add(nodeBai);
                 }
@@ -111,30 +170,59 @@ namespace DoAnCuoiKy
             treeViewBaiHoc.AfterSelect += TreeViewBaiHoc_AfterSelect;
         }
 
-        private string GetIconForBaiHoc(TienDoHocTap tienDo)
+        private string GetIconForBaiHoc(double tienDo)
         {
-            if (tienDo == null) return "○";
-            if (tienDo.TiLeHoanThanh >= 90) return "✓";
-            if (tienDo.TiLeHoanThanh > 0) return "►";
+            if (tienDo >= 90) return "✓";
+            if (tienDo > 0) return "►";
             return "○";
         }
 
         private void TreeViewBaiHoc_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node.Tag is BaiHoc baiHoc)
+            if (e.Node.Tag is BaiHoc baiHocDuocChon)
             {
-                _baiHocHienTai = baiHoc;
-                _baiHocIndex = _danhSachBaiHoc.IndexOf(baiHoc);
-                HienThiBaiHoc(baiHoc);
+                // 🔥 QUAN TRỌNG: Tìm bài học bằng MaBaiHoc thay vì object reference
+                var baiHocTrongDanhSach = _danhSachBaiHoc.FirstOrDefault(bh => bh.MaBaiHoc == baiHocDuocChon.MaBaiHoc);
+
+                if (baiHocTrongDanhSach != null)
+                {
+                    _baiHocHienTai = baiHocTrongDanhSach;
+                    _baiHocIndex = _danhSachBaiHoc.IndexOf(baiHocTrongDanhSach);
+
+                    Console.WriteLine($"🎯 Đã chọn: Bài {_baiHocIndex + 1} - {_baiHocHienTai.TieuDeBaiHoc}");
+                    HienThiBaiHoc(_baiHocHienTai);
+                }
+                else
+                {
+                    Console.WriteLine($"❌ Không tìm thấy bài học trong danh sách: {baiHocDuocChon.TieuDeBaiHoc}");
+                }
             }
         }
 
         private void HienThiBaiHoc(BaiHoc baiHoc)
         {
+            // Dừng timer hiện tại
+            _progressTimer.Stop();
+            _isVideoPlaying = false;
+
             // Hiển thị tiêu đề
             lblTieuDeBaiHoc.Text = baiHoc.TieuDeBaiHoc;
 
-            // Hiển thị video (nếu có) - DÙNG WEBVIEW2
+            // 🔥 HIỂN THỊ TIẾN ĐỘ CỦA BÀI HỌC NÀY
+            if (_tienDoTheoBaiHoc.ContainsKey(baiHoc.MaBaiHoc))
+            {
+                var (progress, seconds) = _tienDoTheoBaiHoc[baiHoc.MaBaiHoc];
+                progressBaiHoc.Value = (int)progress;
+                lblTienDoBaiHoc.Text = $"{progress:0}% hoàn thành";
+                Console.WriteLine($"🎯 Hiển thị bài {baiHoc.TieuDeBaiHoc}: {progress}%");
+            }
+            else
+            {
+                progressBaiHoc.Value = 0;
+                lblTienDoBaiHoc.Text = "0% hoàn thành";
+            }
+
+            // Hiển thị video (nếu có)
             XuLyHienThiVideo(baiHoc);
 
             // Hiển thị nội dung bài học
@@ -147,22 +235,9 @@ namespace DoAnCuoiKy
             // Cập nhật nút điều hướng
             btnTruoc.Enabled = _baiHocIndex > 0;
             btnSau.Enabled = _baiHocIndex < _danhSachBaiHoc.Count - 1;
-
-            // Cập nhật tiến độ bài học
-            var tienDo = _tienDoHocVien.FirstOrDefault(td => td.MaBaiHoc == baiHoc.MaBaiHoc);
-            if (tienDo != null)
-            {
-                progressBaiHoc.Value = (int)tienDo.TiLeHoanThanh;
-                lblTienDoBaiHoc.Text = $"{tienDo.TiLeHoanThanh:0}% hoàn thành";
-            }
-            else
-            {
-                progressBaiHoc.Value = 0;
-                lblTienDoBaiHoc.Text = "0% hoàn thành";
-            }
         }
 
-        private void XuLyHienThiVideo(BaiHoc baiHoc)
+        private async void XuLyHienThiVideo(BaiHoc baiHoc)
         {
             if (string.IsNullOrEmpty(baiHoc.DuongDanVideo))
             {
@@ -172,14 +247,28 @@ namespace DoAnCuoiKy
 
             webView2Video.Visible = true;
 
-            // WEBVIEW2 LOAD TRỰC TIẾP YOUTUBE LINK
             try
             {
-                webView2Video.CoreWebView2?.Navigate(baiHoc.DuongDanVideo);
+                if (webView2Video.CoreWebView2 == null)
+                {
+                    await webView2Video.EnsureCoreWebView2Async(null);
+                }
+
+                // Load video
+                webView2Video.CoreWebView2.Navigate(baiHoc.DuongDanVideo);
+
+                // Bắt đầu theo dõi sau 3 giây
+                await Task.Delay(3000);
+
+                _isVideoPlaying = true;
+                _progressTimer.Start();
+
+                Console.WriteLine($"▶️ Bắt đầu theo dõi video: {baiHoc.TieuDeBaiHoc}");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi load video: {ex.Message}");
+                Console.WriteLine($"Lỗi load video: {ex.Message}");
+                _isVideoPlaying = false;
             }
         }
 
@@ -194,41 +283,201 @@ namespace DoAnCuoiKy
             };
         }
 
-        private void CapNhatThongKe()
+        private async Task CapNhatTienDoVideo()
         {
-            var tongBaiHoc = _danhSachBaiHoc.Count;
-            var baiHocDaHoanThanh = _tienDoHocVien.Count(td => td.TiLeHoanThanh >= 90);
-            var tongThoiLuong = _danhSachBaiHoc.Sum(bh => bh.ThoiLuong);
-            var thoiGianDaHoc = _tienDoHocVien.Sum(td => td.ThoiGianXem) / 60;
+            if (_baiHocHienTai == null || !_isVideoPlaying)
+            {
+                return;
+            }
 
-            var phanTramHoanThanh = tongBaiHoc > 0 ? (baiHocDaHoanThanh * 100) / tongBaiHoc : 0;
+            try
+            {
+                // Lấy tiến độ hiện tại của bài học này
+                var (currentProgress, currentSeconds) = _tienDoTheoBaiHoc[_baiHocHienTai.MaBaiHoc];
 
-            lblThongKe.Text = $"📊 THỐNG KÊ:\n" +
-                            $"• {baiHocDaHoanThanh}/{tongBaiHoc} bài ✓\n" +
-                            $"• {thoiGianDaHoc}/{tongThoiLuong} phút\n" +
-                            $"• {phanTramHoanThanh}% hoàn thành";
+                // ⚡ TĂNG: Thêm 10 giây mỗi lần timer chạy (thay vì 5 giây)
+                int newSeconds = currentSeconds + 10;
 
-            progressTongQuat.Value = phanTramHoanThanh;
+                // ⚡ TĂNG: Tính tiến độ tăng thêm nhiều hơn
+                double progressIncrement = TinhPhanTramTangThem(10, (int)_baiHocHienTai.ThoiLuong); // Tăng từ 5 lên 10 giây
+                double newProgress = Math.Min(currentProgress + progressIncrement, 100);
+
+                Console.WriteLine($"⏱️ Thời gian: {newSeconds}s | Tiến độ cũ: {currentProgress}% | Tăng thêm: {progressIncrement}% | Tiến độ mới: {newProgress}%");
+
+                // 🔥 CẬP NHẬT TIẾN ĐỘ CHO BÀI HỌC NÀY
+                _tienDoTheoBaiHoc[_baiHocHienTai.MaBaiHoc] = (newProgress, newSeconds);
+
+                // Cập nhật UI
+                progressBaiHoc.Value = (int)newProgress;
+                lblTienDoBaiHoc.Text = $"{newProgress:0}% hoàn thành";
+
+                // Cập nhật CSDL
+                await CapNhatTienDoDatabase(_baiHocHienTai.MaBaiHoc, newProgress, newSeconds);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Lỗi cập nhật tiến độ: {ex.Message}");
+            }
+        }
+
+
+        // 🔥 TÍNH PHẦN TRĂM TĂNG THÊM cho mỗi khoảng thời gian
+        private double TinhPhanTramTangThem(int secondsToAdd, int thoiLuongBaiHoc)
+        {
+            if (thoiLuongBaiHoc <= 0)
+                return 0;
+
+            // Chuyển thời lượng bài học từ phút sang giây
+            int totalSeconds = thoiLuongBaiHoc * 60;
+
+            // ⚡ TĂNG: Tính % tăng thêm nhanh hơn
+            double increment = (secondsToAdd / (double)totalSeconds) * 100;
+
+            // ⚡ TĂNG: Giới hạn tối đa 10% mỗi lần cập nhật (thay vì 5%)
+            return Math.Min(increment, 10.0);
+        }
+
+        private async Task CapNhatTienDoDatabase(Guid maBaiHoc, double progress, int seconds)
+        {
+            try
+            {
+                // 1. Cập nhật tiến độ bài học
+                await _context.Database.ExecuteSqlCommandAsync(
+                    "EXEC sp_CapNhatTienDoHocTap @p0, @p1, @p2, @p3",
+                    _maHocVien, maBaiHoc.ToString(), seconds, (decimal)progress
+                );
+
+                // 2. Cập nhật tiến độ khóa học
+                try
+                {
+                    await _context.Database.ExecuteSqlCommandAsync(
+                        "EXEC sp_TinhPhanTramHoanThanhKhoaHoc @p0, @p1",
+                        _maHocVien, _maKhoaHoc
+                    );
+                    Console.WriteLine("✅ Đã gọi stored procedure");
+                }
+                catch
+                {
+                    Console.WriteLine("🔄 Stored procedure lỗi, dùng phương thức trực tiếp");
+                    await CapNhatTrucTiepDangKyKhoaHoc();
+                }
+
+                // 3. 🔥 QUAN TRỌNG: Refresh lại dữ liệu từ CSDL
+                await KhoiTaoTienDoTuCSDL();
+
+                // 4. Cập nhật UI
+                await KiemTraVaCapNhatDangKyKhoaHoc();
+
+                Console.WriteLine($"🎉 Đã cập nhật hoàn tất: {progress}%");
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Lỗi cập nhật CSDL: {ex.Message}");
+            }
+        }
+
+        // 🔥 PHƯƠNG THỨC MỚI: Kiểm tra và cập nhật trực tiếp DangKyKhoaHoc
+        private async Task KiemTraVaCapNhatDangKyKhoaHoc()
+        {
+            try
+            {
+                // Đọc dữ liệu mới nhất từ DangKyKhoaHoc
+                var dangKy = await _context.DangKyKhoaHocs
+                    .FirstOrDefaultAsync(dk => dk.MaHocVien.ToString() == _maHocVien &&
+                                               dk.MaKhoaHoc.ToString() == _maKhoaHoc);
+
+                if (dangKy != null)
+                {
+                    Console.WriteLine($"📊 DangKyKhoaHoc - PhanTramHoanThanh: {dangKy.PhanTramHoanThanh}%, DaHoanThanh: {dangKy.DaHoanThanh}");
+
+                    // Cập nhật UI ngay lập tức
+                    this.Invoke(new Action(() => {
+                        progressTongQuat.Value = (int)(dangKy.PhanTramHoanThanh ?? 0);
+                        lblThongKe.Text = $"📊 THỐNG KÊ:\n" +
+                                        $"• % hoàn thành khóa: {dangKy.PhanTramHoanThanh:0}%\n" +
+                                        $"• Trạng thái: {(dangKy.DaHoanThanh == true ? "✅ Đã hoàn thành" : "📚 Đang học")}";
+                    }));
+                }
+                else
+                {
+                    Console.WriteLine("❌ Không tìm thấy bản ghi DangKyKhoaHoc");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi kiểm tra DangKyKhoaHoc: {ex.Message}");
+            }
+        }
+        // 🔥 DỰ PHÒNG: Cập nhật trực tiếp nếu stored procedure không hoạt động
+        private async Task CapNhatTrucTiepDangKyKhoaHoc()
+        {
+            try
+            {
+                // Tính toán phần trăm hoàn thành khóa học
+                var tongBaiHoc = _danhSachBaiHoc.Count;
+                var soBaiHocDaHoanThanh = _tienDoHocVien.Count(td => td.TiLeHoanThanh >= 90);
+
+                var phanTramHoanThanh = tongBaiHoc > 0 ? (soBaiHocDaHoanThanh * 100.0) / tongBaiHoc : 0;
+                var daHoanThanh = phanTramHoanThanh >= 100;
+
+                // Cập nhật trực tiếp vào DangKyKhoaHoc
+                var dangKy = await _context.DangKyKhoaHocs
+                    .FirstOrDefaultAsync(dk => dk.MaHocVien.ToString() == _maHocVien &&
+                                               dk.MaKhoaHoc.ToString() == _maKhoaHoc);
+
+                if (dangKy != null)
+                {
+                    dangKy.PhanTramHoanThanh = (decimal)phanTramHoanThanh;
+                    dangKy.DaHoanThanh = daHoanThanh;
+                    dangKy.NgayTruyCapCuoi = DateTime.Now;
+
+                    if (daHoanThanh && dangKy.NgayHoanThanh == null)
+                    {
+                        dangKy.NgayHoanThanh = DateTime.Now;
+                    }
+
+                    await _context.SaveChangesAsync();
+                    Console.WriteLine($"🔥 Đã cập nhật TRỰC TIẾP DangKyKhoaHoc: {phanTramHoanThanh:0}%");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi cập nhật trực tiếp DangKyKhoaHoc: {ex.Message}");
+            }
+        }
+        private async Task CapNhatThongKe()
+        {
+            try
+            {
+                var dangKy = await _context.DangKyKhoaHocs
+                    .FirstOrDefaultAsync(dk => dk.MaHocVien.ToString() == _maHocVien &&
+                                               dk.MaKhoaHoc.ToString() == _maKhoaHoc);
+
+                var phanTramThat = dangKy?.PhanTramHoanThanh ?? 0;
+
+                lblThongKe.Text = $"📊 THỐNG KÊ:\n" +
+                                $"• % hoàn thành khóa: {phanTramThat:0}%\n" +
+                                $"• (Dữ liệu thật từ CSDL)";
+
+                progressTongQuat.Value = (int)phanTramThat;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi cập nhật thống kê: {ex.Message}");
+            }
         }
 
         private void btnTruoc_Click(object sender, EventArgs e)
         {
-            if (_baiHocIndex > 0)
-            {
-                _baiHocIndex--;
-                _baiHocHienTai = _danhSachBaiHoc[_baiHocIndex];
-                HienThiBaiHoc(_baiHocHienTai);
-            }
+            
         }
 
         private void btnSau_Click(object sender, EventArgs e)
         {
-            if (_baiHocIndex < _danhSachBaiHoc.Count - 1)
-            {
-                _baiHocIndex++;
-                _baiHocHienTai = _danhSachBaiHoc[_baiHocIndex];
-                HienThiBaiHoc(_baiHocHienTai);
-            }
+           
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
@@ -238,12 +487,33 @@ namespace DoAnCuoiKy
 
         private void btnBack_Click(object sender, EventArgs e)
         {
+            _progressTimer?.Stop();
             this.Close();
         }
 
         private void frmBaiHoc_Load(object sender, EventArgs e)
         {
             // Khởi tạo thêm nếu cần
+        }
+
+        private void btnTruoc_Click_1(object sender, EventArgs e)
+        {
+            if (_baiHocIndex > 0)
+            {
+                _baiHocIndex--;
+                _baiHocHienTai = _danhSachBaiHoc[_baiHocIndex];
+                HienThiBaiHoc(_baiHocHienTai);
+            }
+        }
+
+        private void btnSau_Click_1(object sender, EventArgs e)
+        {
+            if (_baiHocIndex < _danhSachBaiHoc.Count - 1)
+            {
+                _baiHocIndex++;
+                _baiHocHienTai = _danhSachBaiHoc[_baiHocIndex];
+                HienThiBaiHoc(_baiHocHienTai);
+            }
         }
     }
 }

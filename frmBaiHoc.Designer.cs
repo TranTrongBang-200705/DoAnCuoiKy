@@ -36,23 +36,22 @@
             this.rtbNoiDung = new System.Windows.Forms.RichTextBox();
             this.lblThongTinBaiHoc = new System.Windows.Forms.Label();
             this.pnlVideo = new System.Windows.Forms.Panel();
+            this.webView2Video = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pnlNavigation = new System.Windows.Forms.Panel();
             this.btnSau = new System.Windows.Forms.Button();
-            this.btnPlay = new System.Windows.Forms.Button();
             this.btnTruoc = new System.Windows.Forms.Button();
             this.lblThongKe = new System.Windows.Forms.Label();
             this.lblTenKhoaHoc = new System.Windows.Forms.Label();
-            this.webView2Video = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pnlVideo.SuspendLayout();
-            this.pnlNavigation.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView2Video)).BeginInit();
+            this.pnlNavigation.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeViewBaiHoc
             // 
             this.treeViewBaiHoc.Location = new System.Drawing.Point(12, 97);
             this.treeViewBaiHoc.Name = "treeViewBaiHoc";
-            this.treeViewBaiHoc.Size = new System.Drawing.Size(148, 339);
+            this.treeViewBaiHoc.Size = new System.Drawing.Size(225, 339);
             this.treeViewBaiHoc.TabIndex = 0;
             // 
             // lblTieuDeBaiHoc
@@ -112,10 +111,20 @@
             this.pnlVideo.Size = new System.Drawing.Size(388, 198);
             this.pnlVideo.TabIndex = 7;
             // 
+            // webView2Video
+            // 
+            this.webView2Video.AllowExternalDrop = true;
+            this.webView2Video.CreationProperties = null;
+            this.webView2Video.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.webView2Video.Location = new System.Drawing.Point(3, 3);
+            this.webView2Video.Name = "webView2Video";
+            this.webView2Video.Size = new System.Drawing.Size(382, 192);
+            this.webView2Video.TabIndex = 0;
+            this.webView2Video.ZoomFactor = 1D;
+            // 
             // pnlNavigation
             // 
             this.pnlNavigation.Controls.Add(this.btnSau);
-            this.pnlNavigation.Controls.Add(this.btnPlay);
             this.pnlNavigation.Controls.Add(this.btnTruoc);
             this.pnlNavigation.Location = new System.Drawing.Point(386, 469);
             this.pnlNavigation.Name = "pnlNavigation";
@@ -124,30 +133,23 @@
             // 
             // btnSau
             // 
-            this.btnSau.Location = new System.Drawing.Point(226, 144);
+            this.btnSau.Location = new System.Drawing.Point(188, 144);
             this.btnSau.Name = "btnSau";
             this.btnSau.Size = new System.Drawing.Size(75, 23);
             this.btnSau.TabIndex = 2;
             this.btnSau.Text = "button3";
             this.btnSau.UseVisualStyleBackColor = true;
-            // 
-            // btnPlay
-            // 
-            this.btnPlay.Location = new System.Drawing.Point(111, 144);
-            this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(75, 23);
-            this.btnPlay.TabIndex = 1;
-            this.btnPlay.Text = "button2";
-            this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnSau.Click += new System.EventHandler(this.btnSau_Click_1);
             // 
             // btnTruoc
             // 
-            this.btnTruoc.Location = new System.Drawing.Point(3, 144);
+            this.btnTruoc.Location = new System.Drawing.Point(49, 144);
             this.btnTruoc.Name = "btnTruoc";
             this.btnTruoc.Size = new System.Drawing.Size(75, 23);
             this.btnTruoc.TabIndex = 0;
             this.btnTruoc.Text = "button1";
             this.btnTruoc.UseVisualStyleBackColor = true;
+            this.btnTruoc.Click += new System.EventHandler(this.btnTruoc_Click_1);
             // 
             // lblThongKe
             // 
@@ -166,17 +168,6 @@
             this.lblTenKhoaHoc.Size = new System.Drawing.Size(44, 16);
             this.lblTenKhoaHoc.TabIndex = 10;
             this.lblTenKhoaHoc.Text = "label1";
-            // 
-            // webView2Video
-            // 
-            this.webView2Video.AllowExternalDrop = true;
-            this.webView2Video.CreationProperties = null;
-            this.webView2Video.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView2Video.Location = new System.Drawing.Point(18, 21);
-            this.webView2Video.Name = "webView2Video";
-            this.webView2Video.Size = new System.Drawing.Size(355, 174);
-            this.webView2Video.TabIndex = 0;
-            this.webView2Video.ZoomFactor = 1D;
             // 
             // frmBaiHoc
             // 
@@ -198,8 +189,8 @@
             this.Text = "frmBaiHoc";
             this.Load += new System.EventHandler(this.frmBaiHoc_Load);
             this.pnlVideo.ResumeLayout(false);
-            this.pnlNavigation.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.webView2Video)).EndInit();
+            this.pnlNavigation.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -217,7 +208,6 @@
         private System.Windows.Forms.Panel pnlVideo;
         private System.Windows.Forms.Panel pnlNavigation;
         private System.Windows.Forms.Button btnSau;
-        private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Button btnTruoc;
         private System.Windows.Forms.Label lblThongKe;
         private System.Windows.Forms.Label lblTenKhoaHoc;

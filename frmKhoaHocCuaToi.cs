@@ -284,5 +284,15 @@ namespace DoAnCuoiKy
                 frmBaiHoc.Show();
             }
         }
+
+        private void btnVaoHoc3_Click(object sender, EventArgs e)
+        {
+            if (btnVaoHoc3.Tag != null)
+            {
+                var maKhoaHoc = btnVaoHoc3.Tag.ToString();
+                var frmBaiHoc = new frmBaiHoc(maKhoaHoc, _nguoiDungHienTai.MaNguoiDung.ToString(), _context);
+                frmBaiHoc.Show();
+            }
+        }
     }
 }

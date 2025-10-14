@@ -30,16 +30,16 @@
         {
             this.cmbLocTheo = new System.Windows.Forms.ComboBox();
             this.panelKH1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblTenKH1 = new System.Windows.Forms.Label();
-            this.txtTimKiem = new System.Windows.Forms.TextBox();
-            this.lblTrangThai1 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.lblPhanTram1 = new System.Windows.Forms.Label();
-            this.lblGiangVien1 = new System.Windows.Forms.Label();
-            this.lblNgayCapNhat1 = new System.Windows.Forms.Label();
-            this.btnVaoHoc1 = new System.Windows.Forms.Button();
             this.btnBaiTap1 = new System.Windows.Forms.Button();
+            this.btnVaoHoc1 = new System.Windows.Forms.Button();
+            this.lblNgayCapNhat1 = new System.Windows.Forms.Label();
+            this.lblGiangVien1 = new System.Windows.Forms.Label();
+            this.lblPhanTram1 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.lblTrangThai1 = new System.Windows.Forms.Label();
+            this.lblTenKH1 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtTimKiem = new System.Windows.Forms.TextBox();
             this.panelKH2 = new System.Windows.Forms.Panel();
             this.btnBaiTap2 = new System.Windows.Forms.Button();
             this.btnVaoHoc2 = new System.Windows.Forms.Button();
@@ -90,74 +90,14 @@
             this.panelKH1.Size = new System.Drawing.Size(395, 149);
             this.panelKH1.TabIndex = 1;
             // 
-            // label1
+            // btnBaiTap1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(121, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(361, 36);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "📚 KHÓA HỌC CỦA TÔI";
-            // 
-            // lblTenKH1
-            // 
-            this.lblTenKH1.AutoSize = true;
-            this.lblTenKH1.Location = new System.Drawing.Point(17, 12);
-            this.lblTenKH1.Name = "lblTenKH1";
-            this.lblTenKH1.Size = new System.Drawing.Size(44, 16);
-            this.lblTenKH1.TabIndex = 0;
-            this.lblTenKH1.Text = "label2";
-            // 
-            // txtTimKiem
-            // 
-            this.txtTimKiem.Location = new System.Drawing.Point(382, 70);
-            this.txtTimKiem.Name = "txtTimKiem";
-            this.txtTimKiem.Size = new System.Drawing.Size(100, 22);
-            this.txtTimKiem.TabIndex = 4;
-            // 
-            // lblTrangThai1
-            // 
-            this.lblTrangThai1.AutoSize = true;
-            this.lblTrangThai1.Location = new System.Drawing.Point(17, 37);
-            this.lblTrangThai1.Name = "lblTrangThai1";
-            this.lblTrangThai1.Size = new System.Drawing.Size(44, 16);
-            this.lblTrangThai1.TabIndex = 1;
-            this.lblTrangThai1.Text = "label3";
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(20, 56);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(100, 23);
-            this.progressBar1.TabIndex = 2;
-            // 
-            // lblPhanTram1
-            // 
-            this.lblPhanTram1.AutoSize = true;
-            this.lblPhanTram1.Location = new System.Drawing.Point(126, 63);
-            this.lblPhanTram1.Name = "lblPhanTram1";
-            this.lblPhanTram1.Size = new System.Drawing.Size(44, 16);
-            this.lblPhanTram1.TabIndex = 3;
-            this.lblPhanTram1.Text = "label4";
-            // 
-            // lblGiangVien1
-            // 
-            this.lblGiangVien1.AutoSize = true;
-            this.lblGiangVien1.Location = new System.Drawing.Point(17, 91);
-            this.lblGiangVien1.Name = "lblGiangVien1";
-            this.lblGiangVien1.Size = new System.Drawing.Size(44, 16);
-            this.lblGiangVien1.TabIndex = 4;
-            this.lblGiangVien1.Text = "label5";
-            // 
-            // lblNgayCapNhat1
-            // 
-            this.lblNgayCapNhat1.AutoSize = true;
-            this.lblNgayCapNhat1.Location = new System.Drawing.Point(17, 119);
-            this.lblNgayCapNhat1.Name = "lblNgayCapNhat1";
-            this.lblNgayCapNhat1.Size = new System.Drawing.Size(44, 16);
-            this.lblNgayCapNhat1.TabIndex = 5;
-            this.lblNgayCapNhat1.Text = "label6";
+            this.btnBaiTap1.Location = new System.Drawing.Point(311, 116);
+            this.btnBaiTap1.Name = "btnBaiTap1";
+            this.btnBaiTap1.Size = new System.Drawing.Size(75, 23);
+            this.btnBaiTap1.TabIndex = 7;
+            this.btnBaiTap1.Text = "Bài Tập";
+            this.btnBaiTap1.UseVisualStyleBackColor = true;
             // 
             // btnVaoHoc1
             // 
@@ -169,14 +109,74 @@
             this.btnVaoHoc1.UseVisualStyleBackColor = true;
             this.btnVaoHoc1.Click += new System.EventHandler(this.btnVaoHoc1_Click);
             // 
-            // btnBaiTap1
+            // lblNgayCapNhat1
             // 
-            this.btnBaiTap1.Location = new System.Drawing.Point(311, 116);
-            this.btnBaiTap1.Name = "btnBaiTap1";
-            this.btnBaiTap1.Size = new System.Drawing.Size(75, 23);
-            this.btnBaiTap1.TabIndex = 7;
-            this.btnBaiTap1.Text = "Bài Tập";
-            this.btnBaiTap1.UseVisualStyleBackColor = true;
+            this.lblNgayCapNhat1.AutoSize = true;
+            this.lblNgayCapNhat1.Location = new System.Drawing.Point(17, 119);
+            this.lblNgayCapNhat1.Name = "lblNgayCapNhat1";
+            this.lblNgayCapNhat1.Size = new System.Drawing.Size(44, 16);
+            this.lblNgayCapNhat1.TabIndex = 5;
+            this.lblNgayCapNhat1.Text = "label6";
+            // 
+            // lblGiangVien1
+            // 
+            this.lblGiangVien1.AutoSize = true;
+            this.lblGiangVien1.Location = new System.Drawing.Point(17, 91);
+            this.lblGiangVien1.Name = "lblGiangVien1";
+            this.lblGiangVien1.Size = new System.Drawing.Size(44, 16);
+            this.lblGiangVien1.TabIndex = 4;
+            this.lblGiangVien1.Text = "label5";
+            // 
+            // lblPhanTram1
+            // 
+            this.lblPhanTram1.AutoSize = true;
+            this.lblPhanTram1.Location = new System.Drawing.Point(126, 63);
+            this.lblPhanTram1.Name = "lblPhanTram1";
+            this.lblPhanTram1.Size = new System.Drawing.Size(44, 16);
+            this.lblPhanTram1.TabIndex = 3;
+            this.lblPhanTram1.Text = "label4";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(20, 56);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(100, 23);
+            this.progressBar1.TabIndex = 2;
+            // 
+            // lblTrangThai1
+            // 
+            this.lblTrangThai1.AutoSize = true;
+            this.lblTrangThai1.Location = new System.Drawing.Point(17, 37);
+            this.lblTrangThai1.Name = "lblTrangThai1";
+            this.lblTrangThai1.Size = new System.Drawing.Size(44, 16);
+            this.lblTrangThai1.TabIndex = 1;
+            this.lblTrangThai1.Text = "label3";
+            // 
+            // lblTenKH1
+            // 
+            this.lblTenKH1.AutoSize = true;
+            this.lblTenKH1.Location = new System.Drawing.Point(17, 12);
+            this.lblTenKH1.Name = "lblTenKH1";
+            this.lblTenKH1.Size = new System.Drawing.Size(44, 16);
+            this.lblTenKH1.TabIndex = 0;
+            this.lblTenKH1.Text = "label2";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(121, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(361, 36);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "📚 KHÓA HỌC CỦA TÔI";
+            // 
+            // txtTimKiem
+            // 
+            this.txtTimKiem.Location = new System.Drawing.Point(382, 70);
+            this.txtTimKiem.Name = "txtTimKiem";
+            this.txtTimKiem.Size = new System.Drawing.Size(100, 22);
+            this.txtTimKiem.TabIndex = 4;
             // 
             // panelKH2
             // 
@@ -296,6 +296,7 @@
             this.btnVaoHoc3.TabIndex = 6;
             this.btnVaoHoc3.Text = "Vào Học";
             this.btnVaoHoc3.UseVisualStyleBackColor = true;
+            this.btnVaoHoc3.Click += new System.EventHandler(this.btnVaoHoc3_Click);
             // 
             // lblNgayCapNhat3
             // 
