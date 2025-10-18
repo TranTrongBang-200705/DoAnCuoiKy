@@ -24,5 +24,22 @@ namespace DoAnCuoiKy
         {
 
         }
+
+        private void thôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Gọi form thông tin cá nhân
+            var frmThongTin = new frmInfo(_nguoiDunghientai, _context);
+            frmThongTin.MdiParent = this; // Đặt làm form con của Main
+            frmThongTin.WindowState = FormWindowState.Normal;
+            frmThongTin.Show();
+        }
+
+        private void đổiMậtKhẩuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frmDoiMK = new frmDoiMK(_nguoiDunghientai, _context);
+            frmDoiMK.MdiParent = this;
+            frmDoiMK.WindowState = FormWindowState.Normal;
+            frmDoiMK.Show();
+        }
     }
 }

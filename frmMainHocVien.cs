@@ -73,12 +73,12 @@ namespace DoAnCuoiKy
 
         private void tấtCảKhóaHọcToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Mở form danh sách khóa học");
+            
         }
 
         private void khóaHọcCủaTôiToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Mở form khóa học của tôi");
+            
         }
 
         private void thôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
@@ -119,6 +119,14 @@ namespace DoAnCuoiKy
             frmKhoaHocCuaToi.MdiParent = this;
             frmKhoaHocCuaToi.WindowState = FormWindowState.Maximized;
             frmKhoaHocCuaToi.Show();
+        }
+
+        private void điểmSốToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frmDiem = new frmDiem(_nguoiDunghientai.MaNguoiDung.ToString());
+            frmDiem.MdiParent = this;
+            frmDiem.WindowState = FormWindowState.Maximized;
+            frmDiem.Show();
         }
     }
 }

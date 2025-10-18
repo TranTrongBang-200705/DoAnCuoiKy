@@ -294,5 +294,35 @@ namespace DoAnCuoiKy
                 frmBaiHoc.Show();
             }
         }
+
+        private void btnBaiTap1_Click(object sender, EventArgs e)
+        {
+            if (btnBaiTap1.Tag != null)
+            {
+                var maKhoaHoc = btnBaiTap1.Tag.ToString();
+                var frmBaiTap = new frmBaiTap(maKhoaHoc, _nguoiDungHienTai.MaNguoiDung.ToString(), _context);
+                frmBaiTap.Show();
+            }
+        }
+
+        private void btnBaiTap2_Click(object sender, EventArgs e)
+        {
+            if (btnBaiTap2.Tag != null)
+            {
+                var maKhoaHoc = btnBaiTap2.Tag.ToString();
+                var frmBaiTap = new frmBaiTap(maKhoaHoc, _nguoiDungHienTai.MaNguoiDung.ToString(), _context);
+                frmBaiTap.Show();
+            }
+        }
+
+        private void btnBaiTap3_Click(object sender, EventArgs e)
+        {
+            if (btnBaiTap3.Tag != null)
+            {
+                var maKhoaHoc = btnBaiTap3.Tag.ToString();
+                var frmBaiTap = new frmBaiTap(maKhoaHoc, _nguoiDungHienTai.MaNguoiDung.ToString(), _context);
+                frmBaiTap.Show();
+            }
+        }
     }
 }

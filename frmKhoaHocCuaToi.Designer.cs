@@ -98,6 +98,7 @@
             this.btnBaiTap1.TabIndex = 7;
             this.btnBaiTap1.Text = "Bài Tập";
             this.btnBaiTap1.UseVisualStyleBackColor = true;
+            this.btnBaiTap1.Click += new System.EventHandler(this.btnBaiTap1_Click);
             // 
             // btnVaoHoc1
             // 
@@ -201,6 +202,7 @@
             this.btnBaiTap2.TabIndex = 7;
             this.btnBaiTap2.Text = "Bài Tập";
             this.btnBaiTap2.UseVisualStyleBackColor = true;
+            this.btnBaiTap2.Click += new System.EventHandler(this.btnBaiTap2_Click);
             // 
             // btnVaoHoc2
             // 
@@ -287,6 +289,7 @@
             this.btnBaiTap3.TabIndex = 7;
             this.btnBaiTap3.Text = "Bài Tập";
             this.btnBaiTap3.UseVisualStyleBackColor = true;
+            this.btnBaiTap3.Click += new System.EventHandler(this.btnBaiTap3_Click);
             // 
             // btnVaoHoc3
             // 
