@@ -141,6 +141,12 @@
     <Compile Include="frmMainQuanTri.Designer.cs">
       <DependentUpon>frmMainQuanTri.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmQLNguoiDung.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmQLNguoiDung.Designer.cs">
+      <DependentUpon>frmQLNguoiDung.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmThongKe.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -194,6 +200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmMainQuanTri.resx">
       <DependentUpon>frmMainQuanTri.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmQLNguoiDung.resx">
+      <DependentUpon>frmQLNguoiDung.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

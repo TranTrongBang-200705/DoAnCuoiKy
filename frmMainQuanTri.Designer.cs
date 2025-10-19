@@ -32,12 +32,12 @@
             this.trangChủToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quảnLýNgườiDùngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quảnLýKhóaHọcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cậpNhậtKhóaHọcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hồSơToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thôngTinCáNhânToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.đổiMậtKhẩuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.đăngXuấtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cậpNhậtKhóaHọcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,6 +66,7 @@
             this.quảnLýNgườiDùngToolStripMenuItem.Name = "quảnLýNgườiDùngToolStripMenuItem";
             this.quảnLýNgườiDùngToolStripMenuItem.Size = new System.Drawing.Size(161, 24);
             this.quảnLýNgườiDùngToolStripMenuItem.Text = "Quản Lý Người Dùng";
+            this.quảnLýNgườiDùngToolStripMenuItem.Click += new System.EventHandler(this.quảnLýNgườiDùngToolStripMenuItem_Click);
             // 
             // quảnLýKhóaHọcToolStripMenuItem
             // 
@@ -74,6 +75,12 @@
             this.quảnLýKhóaHọcToolStripMenuItem.Name = "quảnLýKhóaHọcToolStripMenuItem";
             this.quảnLýKhóaHọcToolStripMenuItem.Size = new System.Drawing.Size(144, 24);
             this.quảnLýKhóaHọcToolStripMenuItem.Text = "Quản Lý Khóa Học";
+            // 
+            // cậpNhậtKhóaHọcToolStripMenuItem
+            // 
+            this.cậpNhậtKhóaHọcToolStripMenuItem.Name = "cậpNhậtKhóaHọcToolStripMenuItem";
+            this.cậpNhậtKhóaHọcToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
+            this.cậpNhậtKhóaHọcToolStripMenuItem.Text = "Cập Nhật Khóa Học";
             // 
             // hồSơToolStripMenuItem
             // 
@@ -89,31 +96,25 @@
             // thôngTinCáNhânToolStripMenuItem
             // 
             this.thôngTinCáNhânToolStripMenuItem.Name = "thôngTinCáNhânToolStripMenuItem";
-            this.thôngTinCáNhânToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.thôngTinCáNhânToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
             this.thôngTinCáNhânToolStripMenuItem.Text = "Thông Tin Cá Nhân";
             // 
             // đổiMậtKhẩuToolStripMenuItem
             // 
             this.đổiMậtKhẩuToolStripMenuItem.Name = "đổiMậtKhẩuToolStripMenuItem";
-            this.đổiMậtKhẩuToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.đổiMậtKhẩuToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
             this.đổiMậtKhẩuToolStripMenuItem.Text = "Đổi Mật Khẩu";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(215, 6);
             // 
             // đăngXuấtToolStripMenuItem
             // 
             this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
-            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng Xuất";
-            // 
-            // cậpNhậtKhóaHọcToolStripMenuItem
-            // 
-            this.cậpNhậtKhóaHọcToolStripMenuItem.Name = "cậpNhậtKhóaHọcToolStripMenuItem";
-            this.cậpNhậtKhóaHọcToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.cậpNhậtKhóaHọcToolStripMenuItem.Text = "Cập Nhật Khóa Học";
             // 
             // frmMainQuanTri
             // 
