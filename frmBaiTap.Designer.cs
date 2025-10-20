@@ -197,11 +197,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-<<<<<<< HEAD
             this.ClientSize = new System.Drawing.Size(1139, 815);
-=======
-            this.ClientSize = new System.Drawing.Size(965, 815);
->>>>>>> 1a62cc8b5e3d27547199f85edea8ce1443939d29
             this.Controls.Add(this.txtTieuDeBaiTap);
             this.Controls.Add(this.btnThoat);
             this.Controls.Add(this.btnNopBai);

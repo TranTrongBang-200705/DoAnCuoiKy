@@ -24,11 +24,5 @@ namespace DoAnCuoiKy
         {
 
         }
-
-        private void quảnLýNgườiDùngToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmQLNguoiDung f = new frmQLNguoiDung();
-            f.ShowDialog();
-        }
     }
 }
