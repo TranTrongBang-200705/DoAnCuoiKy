@@ -58,6 +58,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+=======
+>>>>>>> 1a62cc8b5e3d27547199f85edea8ce1443939d29
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -81,6 +85,15 @@
     <Compile Include="frmBaiTap.Designer.cs">
       <DependentUpon>frmBaiTap.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="frmChamBai.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChamBai.Designer.cs">
+      <DependentUpon>frmChamBai.cs</DependentUpon>
+    </Compile>
+
+
     <Compile Include="frmDangNhap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,11 +154,19 @@
     <Compile Include="frmMainQuanTri.Designer.cs">
       <DependentUpon>frmMainQuanTri.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="frmQLBT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmQLBT.Designer.cs">
+      <DependentUpon>frmQLBT.cs</DependentUpon>
+
     <Compile Include="frmQLNguoiDung.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmQLNguoiDung.Designer.cs">
       <DependentUpon>frmQLNguoiDung.cs</DependentUpon>
+
     </Compile>
     <Compile Include="frmThongKe.cs">
       <SubType>Form</SubType>
@@ -153,6 +174,27 @@
     <Compile Include="frmThongKe.Designer.cs">
       <DependentUpon>frmThongKe.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="frmKhoaGiangDay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmKhoaGiangDay.Designer.cs">
+      <DependentUpon>frmKhoaGiangDay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BaiHoc.cs" />
+    <Compile Include="Models\BaiTap.cs" />
+    <Compile Include="Models\ChamBai.cs" />
+    <Compile Include="Models\ChuongHoc.cs" />
+    <Compile Include="Models\Coso.cs" />
+    <Compile Include="Models\DangKyKhoaHoc.cs" />
+    <Compile Include="Models\DanhMuc.cs" />
+    <Compile Include="Models\GiaoBaiTap.cs" />
+    <Compile Include="Models\KhoaHoc.cs" />
+    <Compile Include="Models\LichDay.cs" />
+    <Compile Include="Models\Lop.cs" />
+    <Compile Include="Models\Model1.cs" />
+    <Compile Include="Models\MonHoc.cs" />
+
     <Compile Include="Models\BaiHoc.cs" />
     <Compile Include="Models\BaiTap.cs" />
     <Compile Include="Models\ChuongHoc.cs" />
@@ -160,6 +202,7 @@
     <Compile Include="Models\DanhMuc.cs" />
     <Compile Include="Models\KhoaHoc.cs" />
     <Compile Include="Models\Model1.cs" />
+
     <Compile Include="Models\NguoiDung.cs" />
     <Compile Include="Models\NopBaiTap.cs" />
     <Compile Include="Models\TienDoHocTap.cs" />
@@ -171,6 +214,12 @@
     <EmbeddedResource Include="frmBaiTap.resx">
       <DependentUpon>frmBaiTap.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="frmChamBai.resx">
+      <DependentUpon>frmChamBai.cs</DependentUpon>
+    </EmbeddedResource>
+
+
     <EmbeddedResource Include="frmDangNhap.resx">
       <DependentUpon>frmDangNhap.cs</DependentUpon>
     </EmbeddedResource>
@@ -189,6 +238,11 @@
     <EmbeddedResource Include="frmInfo.resx">
       <DependentUpon>frmInfo.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="frmKhoaGiangDay.resx">
+      <DependentUpon>frmKhoaGiangDay.cs</DependentUpon>
+    </EmbeddedResource>
+
     <EmbeddedResource Include="frmKhoaHocCuaToi.resx">
       <DependentUpon>frmKhoaHocCuaToi.cs</DependentUpon>
     </EmbeddedResource>
@@ -201,8 +255,13 @@
     <EmbeddedResource Include="frmMainQuanTri.resx">
       <DependentUpon>frmMainQuanTri.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="frmQLBT.resx">
+      <DependentUpon>frmQLBT.cs</DependentUpon>
+
     <EmbeddedResource Include="frmQLNguoiDung.resx">
       <DependentUpon>frmQLNguoiDung.cs</DependentUpon>
+
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

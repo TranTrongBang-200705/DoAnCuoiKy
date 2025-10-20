@@ -28,6 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+<<<<<<< HEAD
+            this.SuspendLayout();
+            // 
+=======
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.trangChủToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quảnLýNgườiDùngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,11 +120,18 @@
             this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng Xuất";
             // 
+>>>>>>> 1a62cc8b5e3d27547199f85edea8ce1443939d29
             // frmMainQuanTri
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+<<<<<<< HEAD
+            this.Name = "frmMainQuanTri";
+            this.Text = "frmMainQuanTri";
+            this.Load += new System.EventHandler(this.frmMainQuanTri_Load);
+            this.ResumeLayout(false);
+=======
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmMainQuanTri";
@@ -130,10 +141,12 @@
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
+>>>>>>> 1a62cc8b5e3d27547199f85edea8ce1443939d29
 
         }
 
         #endregion
+
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem trangChủToolStripMenuItem;
