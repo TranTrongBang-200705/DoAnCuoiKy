@@ -91,6 +91,7 @@
             this.rtbNoiDungBaiTap.Size = new System.Drawing.Size(428, 179);
             this.rtbNoiDungBaiTap.TabIndex = 4;
             this.rtbNoiDungBaiTap.Text = "";
+            this.rtbNoiDungBaiTap.TextChanged += new System.EventHandler(this.rtbNoiDungBaiTap_TextChanged);
             // 
             // lblHanNop
             // 
