@@ -168,17 +168,11 @@
     </Compile>
     <Compile Include="Models\BaiHoc.cs" />
     <Compile Include="Models\BaiTap.cs" />
-    <Compile Include="Models\ChamBai.cs" />
     <Compile Include="Models\ChuongHoc.cs" />
-    <Compile Include="Models\Coso.cs" />
     <Compile Include="Models\DangKyKhoaHoc.cs" />
     <Compile Include="Models\DanhMuc.cs" />
-    <Compile Include="Models\GiaoBaiTap.cs" />
     <Compile Include="Models\KhoaHoc.cs" />
-    <Compile Include="Models\LichDay.cs" />
-    <Compile Include="Models\Lop.cs" />
     <Compile Include="Models\Model1.cs" />
-    <Compile Include="Models\MonHoc.cs" />
     <Compile Include="Models\NguoiDung.cs" />
     <Compile Include="Models\NopBaiTap.cs" />
     <Compile Include="Models\TienDoHocTap.cs" />
