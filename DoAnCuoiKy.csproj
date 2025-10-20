@@ -82,15 +82,14 @@
     <Compile Include="frmBaiTap.Designer.cs">
       <DependentUpon>frmBaiTap.cs</DependentUpon>
     </Compile>
-<<<<<<< HEAD
+
     <Compile Include="frmCapNhatKhoaHoc.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmCapNhatKhoaHoc.Designer.cs">
       <DependentUpon>frmCapNhatKhoaHoc.cs</DependentUpon>
     </Compile>
-=======
->>>>>>> 2b28b013f25ce4953a233013467863d03ceb8309
+
     <Compile Include="frmChamBai.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -193,12 +192,10 @@
     <EmbeddedResource Include="frmBaiTap.resx">
       <DependentUpon>frmBaiTap.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
     <EmbeddedResource Include="frmCapNhatKhoaHoc.resx">
       <DependentUpon>frmCapNhatKhoaHoc.cs</DependentUpon>
     </EmbeddedResource>
-=======
->>>>>>> 2b28b013f25ce4953a233013467863d03ceb8309
+
     <EmbeddedResource Include="frmChamBai.resx">
       <DependentUpon>frmChamBai.cs</DependentUpon>
     </EmbeddedResource>
