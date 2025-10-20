@@ -18,26 +18,11 @@ namespace DoAnCuoiKy
         public frmMainQuanTri(NguoiDung nguoiDung, Model1 context)
         {
             InitializeComponent();
-            _nguoiDunghientai = nguoiDung ?? throw new ArgumentNullException(nameof(nguoiDung));
-            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         private void frmMainQuanTri_Load(object sender, EventArgs e)
         {
 
-        }
-
-        private void quảnLýKhóaHọcToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cậpNhậtKhóaHọcToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (var frm = new frmCapNhatKhoaHoc(_nguoiDunghientai, _context))
-            {
-                frm.ShowDialog(this);
-            }
         }
     }
 }

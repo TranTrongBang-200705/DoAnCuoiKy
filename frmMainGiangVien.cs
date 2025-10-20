@@ -41,10 +41,5 @@ namespace DoAnCuoiKy
             frmDoiMK.WindowState = FormWindowState.Normal;
             frmDoiMK.Show();
         }
-
-        private void quảnLýBàiTậpToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

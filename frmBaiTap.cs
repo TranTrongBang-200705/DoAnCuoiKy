@@ -295,10 +295,5 @@ namespace DoAnCuoiKy
         {
             // Code xử lý nếu cần
         }
-
-        private void rtbNoiDungBaiTap_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
